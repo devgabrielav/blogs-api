@@ -1,7 +1,6 @@
 const express = require('express');
-const generateToken = require('./helpers/loginHelper');
-const { User } = require('./models');
-const loginMiddleware = require('./middlewares/login.middleware');
+const loginRoutes = require('./routes/login.routes');
+const userRoutes = require('./routes/user.routes');
 
 // ...
 
@@ -14,19 +13,9 @@ app.get('/', (_request, response) => {
 
 app.use(express.json());
 
-app.post('/login', loginMiddleware, async (req, res) => {
-  const { email, password } = req.body;
+app.use('/login', loginRoutes);
 
-  const user = await User.findOne({ where: { email, password } });
-
-  if (!user) {
-    return res.status(400).json({ message: 'Invalid fields' });
-  }
-
-  const token = generateToken(user.id);
-
-  return res.status(200).json({ token });
-});
+app.use('/user', userRoutes);
 
 // ...
 
