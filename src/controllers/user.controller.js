@@ -21,6 +21,14 @@ const userPostController = async (req, res) => {
   return res.status(code).json(data);
 };
 
+const userGetAllController = async (_req, res) => {
+  const { status, data } = await userServices.getAll();
+  const code = httpMap[status];
+
+  return res.status(code).json(data);
+};
+
 module.exports = {
   userPostController,
+  userGetAllController,
 };
