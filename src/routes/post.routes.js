@@ -12,4 +12,6 @@ postRoutes.post(
   postControllers.postRouteController,
 );
 
+postRoutes.get('/', tokenMiddleware, postControllers.getAllPosts);
+
 module.exports = postRoutes;

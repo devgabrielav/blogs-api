@@ -19,6 +19,15 @@ const postRouteController = async (req, res) => {
   return res.status(code).json(data);
 };
 
+const getAllPosts = async (_req, res) => {
+  const { status, data } = await postServices.getAll();
+
+  const code = httpMap[status];
+
+  return res.status(code).json(data);
+};
+
 module.exports = {
   postRouteController,
+  getAllPosts,
 };
