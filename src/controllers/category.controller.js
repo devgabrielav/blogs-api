@@ -21,6 +21,14 @@ const addCategoryController = async (req, res) => {
   return res.status(code).json(data);
 };
 
+const getAllCategoriesController = async (_req, res) => {
+  const { status, data } = await categoryServices.getAll();
+  const code = httpMap[status];
+  
+  return res.status(code).json(data);
+};
+
 module.exports = {
   addCategoryController,
+  getAllCategoriesController,
 };

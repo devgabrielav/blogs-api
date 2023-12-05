@@ -6,4 +6,6 @@ const categoryRoutes = Router();
 
 categoryRoutes.post('/', tokenMiddleware, categoryControllers.addCategoryController);
 
+categoryRoutes.get('/', tokenMiddleware, categoryControllers.getAllCategoriesController);
+
 module.exports = categoryRoutes;
