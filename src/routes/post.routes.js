@@ -14,4 +14,6 @@ postRoutes.post(
 
 postRoutes.get('/', tokenMiddleware, postControllers.getAllPosts);
 
+postRoutes.get('/:id', tokenMiddleware, postControllers.getPostById);
+
 module.exports = postRoutes;

@@ -27,7 +27,21 @@ const getAllPosts = async (_req, res) => {
   return res.status(code).json(data);
 };
 
+const getPostById = async (req, res) => {
+  const { id } = req.params;
+
+  const { status, data } = await postServices.getById(id);
+  const code = httpMap[status];
+
+  if (status === 'NOT_FOUND') {
+    return res.status(code).json({ message: data.message });
+  }
+
+  return res.status(code).json(data);
+};
+
 module.exports = {
   postRouteController,
   getAllPosts,
+  getPostById,
 };
