@@ -17,4 +17,6 @@ userRoutes.post(
 
 userRoutes.get('/', tokenMiddleware, userController.userGetAllController);
 
+userRoutes.get('/:id', tokenMiddleware, userController.userGetByIdController);
+
 module.exports = userRoutes;

@@ -28,7 +28,20 @@ const userGetAllController = async (_req, res) => {
   return res.status(code).json(data);
 };
 
+const userGetByIdController = async (req, res) => {
+  const { id } = req.params;
+  const { status, data } = await userServices.getById(id);
+  const code = httpMap[status];
+
+  if (status === 'NOT_FOUND') {
+    return res.status(code).json({ message: data.message });
+  }
+
+  return res.status(code).json(data);
+};
+
 module.exports = {
   userPostController,
   userGetAllController,
+  userGetByIdController,
 };
