@@ -1,5 +1,5 @@
 const postServices = require('../services/post.service');
-const { generateHttpCode, errorReturnResponse } = require('../helpers/postHelpers');
+const { generateHttpCode } = require('../helpers/postHelpers');
 
 const postRouteController = async (req, res) => {
   const { title, content, categoryIds } = req.body;
@@ -20,9 +20,6 @@ const getPostById = async (req, res) => {
   const { id } = req.params;
 
   const { status, data } = await postServices.getById(id);
-  const errorRes = errorReturnResponse(status);
-
-  if (errorRes) return res.status(generateHttpCode(status)).json({ message: data.message }); 
 
   return res.status(generateHttpCode(status)).json(data);
 };
@@ -32,21 +29,24 @@ const updatePost = async (req, res) => {
   const { title, content } = req.body;
   
   const { status, data } = await postServices.updatePost(id, title, content);
-  const errorRes = errorReturnResponse(status);
 
-  if (errorRes) return res.status(generateHttpCode(status)).json({ message: data.message }); 
   return res.status(generateHttpCode(status)).json(data);
 };
 
 const deletePost = async (req, res) => {
   const { id } = req.params;
 
-  const { status, data } = await postServices.deletePost(id);
-  const errorRes = errorReturnResponse(status);
-
-  if (errorRes) return res.status(generateHttpCode(status)).json({ message: data.message });
+  const { status } = await postServices.deletePost(id);
 
   return res.status(generateHttpCode(status)).end();
+};
+
+const getPostBySearch = async (req, res) => {
+  const { q } = req.query;
+
+  const { status, data } = await postServices.getByQuery(q);
+
+  return res.status(generateHttpCode(status)).json(data);
 };
 
 module.exports = {
@@ -55,4 +55,5 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  getPostBySearch,
 };

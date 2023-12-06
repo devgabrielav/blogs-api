@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Category, User } = require('../models');
 
 const httpMap = {
@@ -31,13 +32,18 @@ const generateObject = ({ title, content, id, date }) => ({
 
 const generateHttpCode = (status) => httpMap[status];
 
-const errorReturnResponse = (status) => (
-  !!(status === 'NOT_FOUND' || status === 'UNAUTHORIZED'));
+const queryHelper = (q) => ({
+  where: { [Op.or]: { title: { [Op.like]: `%${q}%` }, content: { [Op.like]: `%${q}%` } } },
+  include: [
+    { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ],
+});
 
 module.exports = {
   generator,
   includeKey,
   generateObject,
   generateHttpCode,
-  errorReturnResponse,
+  queryHelper,
 };
