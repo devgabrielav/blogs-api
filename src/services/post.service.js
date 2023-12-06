@@ -1,21 +1,18 @@
-const { Category, BlogPost, PostCategory, User } = require('../models');
+const { Category, BlogPost, PostCategory } = require('../models');
+const { generator, includeKey, generateObject } = require('../helpers/postHelpers');
 
 const addNewPost = async ({ title, content, categoryIds, id }) => {
-  const { rows } = await Category.findAndCountAll({ where: { id: categoryIds } });
+  const { count } = await Category.findAndCountAll({ where: { id: categoryIds } });
 
-  if (rows.length < categoryIds.length) {
-    return { status: 'BAD_REQUEST', data: { message: 'one or more "categoryIds" not found' } };
+  if (count < categoryIds.length) {
+    return generator('BAD_REQUEST', 'one or more "categoryIds" not found');
   }
 
   const date = new Date();
 
-  const { dataValues } = await BlogPost.create({
-    title,
-    content,
-    userId: id,
-    updated: date,
-    published: date,
-  });
+  const newPost = generateObject({ title, content, id, date });
+
+  const { dataValues } = await BlogPost.create(newPost);
 
   const postId = dataValues.id;
 
@@ -26,33 +23,38 @@ const addNewPost = async ({ title, content, categoryIds, id }) => {
 };
 
 const getAll = async () => {
-  const posts = await BlogPost.findAll({
-    include: [
-      { model: User, as: 'user', attributes: { exclude: ['password'] } },
-      { model: Category, as: 'categories', through: { attributes: [] } },
-    ],
-  });
+  const posts = await BlogPost.findAll(includeKey);
 
   return { status: 'SUCCESS', data: posts };
 };
 
 const getById = async (id) => {
-  const post = await BlogPost.findByPk(id, {
-    include: [
-      { model: User, as: 'user', attributes: { exclude: ['password'] } },
-      { model: Category, as: 'categories', through: { attributes: [] } },
-    ],
-  });
+  const post = await BlogPost.findByPk(id, includeKey);
 
-  if (!post) {
-    return { status: 'NOT_FOUND', data: { message: 'Post does not exist' } };
-  }
+  if (!post) return generator('NOT_FOUND', 'Post does not exist');
 
   return { status: 'SUCCESS', data: post };
+};
+
+const updatePost = async (userId, id, title, content) => {
+  const getPost = await BlogPost.findByPk(id, includeKey);
+
+  if (!getPost) return generator('NOT_FOUND', 'Post does not exist');
+
+  if (getPost.user.id !== userId) return generator('UNAUTHORIZED', 'Unauthorized user');
+
+  const updateDate = new Date();
+
+  await BlogPost.update({ title, content, updated: updateDate }, { where: { id } });
+
+  const updatedPost = await BlogPost.findByPk(id, includeKey);
+  
+  return { status: 'SUCCESS', data: updatedPost };
 };
 
 module.exports = {
   addNewPost,
   getAll,
   getById,
+  updatePost,
 };
