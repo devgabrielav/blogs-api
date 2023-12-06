@@ -31,9 +31,13 @@ const generateObject = ({ title, content, id, date }) => ({
 
 const generateHttpCode = (status) => httpMap[status];
 
+const errorReturnResponse = (status) => (
+  !!(status === 'NOT_FOUND' || status === 'UNAUTHORIZED'));
+
 module.exports = {
   generator,
   includeKey,
   generateObject,
   generateHttpCode,
+  errorReturnResponse,
 };

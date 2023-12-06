@@ -31,18 +31,10 @@ const getAll = async () => {
 const getById = async (id) => {
   const post = await BlogPost.findByPk(id, includeKey);
 
-  if (!post) return generator('NOT_FOUND', 'Post does not exist');
-
   return { status: 'SUCCESS', data: post };
 };
 
-const updatePost = async (userId, id, title, content) => {
-  const getPost = await BlogPost.findByPk(id, includeKey);
-
-  if (!getPost) return generator('NOT_FOUND', 'Post does not exist');
-
-  if (getPost.user.id !== userId) return generator('UNAUTHORIZED', 'Unauthorized user');
-
+const updatePost = async (id, title, content) => {
   const updateDate = new Date();
 
   await BlogPost.update({ title, content, updated: updateDate }, { where: { id } });
@@ -52,9 +44,16 @@ const updatePost = async (userId, id, title, content) => {
   return { status: 'SUCCESS', data: updatedPost };
 };
 
+const deletePost = async (id) => {
+  await BlogPost.destroy({ where: { id } });
+
+  return { status: 'DELETED' };
+};
+
 module.exports = {
   addNewPost,
   getAll,
   getById,
   updatePost,
+  deletePost,
 };

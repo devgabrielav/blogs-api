@@ -1,5 +1,5 @@
 const postServices = require('../services/post.service');
-const { generateHttpCode } = require('../helpers/postHelpers');
+const { generateHttpCode, errorReturnResponse } = require('../helpers/postHelpers');
 
 const postRouteController = async (req, res) => {
   const { title, content, categoryIds } = req.body;
@@ -20,25 +20,33 @@ const getPostById = async (req, res) => {
   const { id } = req.params;
 
   const { status, data } = await postServices.getById(id);
+  const errorRes = errorReturnResponse(status);
 
-  if (status === 'NOT_FOUND') { 
-    return res.status(generateHttpCode(status)).json({ message: data.message }); 
-  }
+  if (errorRes) return res.status(generateHttpCode(status)).json({ message: data.message }); 
 
   return res.status(generateHttpCode(status)).json(data);
 };
 
 const updatePost = async (req, res) => {
   const { id } = req.params;
-  const { user } = res.locals;
   const { title, content } = req.body;
+  
+  const { status, data } = await postServices.updatePost(id, title, content);
+  const errorRes = errorReturnResponse(status);
 
-  const { status, data } = await postServices.updatePost(user.id, id, title, content);
-
-  if (status === 'NOT_FOUND' || status === 'UNAUTHORIZED') { 
-    return res.status(generateHttpCode(status)).json({ message: data.message }); 
-  }
+  if (errorRes) return res.status(generateHttpCode(status)).json({ message: data.message }); 
   return res.status(generateHttpCode(status)).json(data);
+};
+
+const deletePost = async (req, res) => {
+  const { id } = req.params;
+
+  const { status, data } = await postServices.deletePost(id);
+  const errorRes = errorReturnResponse(status);
+
+  if (errorRes) return res.status(generateHttpCode(status)).json({ message: data.message });
+
+  return res.status(generateHttpCode(status)).end();
 };
 
 module.exports = {
@@ -46,4 +54,5 @@ module.exports = {
   getAllPosts,
   getPostById,
   updatePost,
+  deletePost,
 };
