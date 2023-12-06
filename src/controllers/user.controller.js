@@ -40,8 +40,18 @@ const userGetByIdController = async (req, res) => {
   return res.status(code).json(data);
 };
 
+const deleteUserController = async (req, res) => {
+  const { id } = res.locals.user;
+
+  const { status } = await userServices.deleteUser(id);
+  const code = httpMap[status];
+
+  return res.status(code).end();
+};
+
 module.exports = {
   userPostController,
   userGetAllController,
   userGetByIdController,
+  deleteUserController,
 };

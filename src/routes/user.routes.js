@@ -19,4 +19,6 @@ userRoutes.get('/', tokenMiddleware, userController.userGetAllController);
 
 userRoutes.get('/:id', tokenMiddleware, userController.userGetByIdController);
 
+userRoutes.delete('/me', tokenMiddleware, userController.deleteUserController);
+
 module.exports = userRoutes;
