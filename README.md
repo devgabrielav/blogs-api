@@ -7,7 +7,7 @@ Along with the login route with validations, it's possible to:
   - GET posts, categories and users;
   - POST posts, categories and users;
   - PUT posts;
-  - DELETE posts and users;
+  - DELETE posts and users.
 
 ## Used technologies
 
