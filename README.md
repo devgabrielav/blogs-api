@@ -31,8 +31,10 @@ npm install
   
   ```
   npm start
+  ```
   > 'node .'  
   or
-  npm run dev
-  > 'nodemon .'
   ```
+  npm run dev
+  ```
+  > 'nodemon .'
