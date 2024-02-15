@@ -32,8 +32,10 @@ npm install
   ```
   npm start
   ```
-  > 'node .'  
-  - or
+  > 'node .'
+  
+  - or run
+    
   ```
   npm run dev
   ```
