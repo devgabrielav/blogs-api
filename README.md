@@ -1,10 +1,36 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# Project Blogs API
+
+# Context
+This is a CRUD project, simulating a blog with: users, categories and posts.
+Along with the login route with validations, it's possible to: 
+  - GET posts, categories and users;
+  - POST posts, categories and users;
+  - PUT posts;
+  - DELETE posts and users;
+
+## Used technologies
+
+Back-end:
+> Developed using: NodeJS, ExpressJS, MYSQL, Sequelize, JWT
+
+## Installing Dependencies
+
+> After cloning the project
+
+```bash
+cd blogs-api
+npm install
+docker compose up -d
+``` 
+## Running the application
+
+  ```
+  docker exec -it blogs_api bash
+  ```
+* Then run
+  
+  ```
+  npm start ## 'node .'
+  or
+  npm run dev ## 'nodemon .'
+  ```
