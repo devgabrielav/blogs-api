@@ -30,7 +30,7 @@ npm install
 * Then run
   
   ```
-  npm start ## 'node .'
+  npm start  > 'node .'
   or
-  npm run dev ## 'nodemon .'
+  npm run dev > 'nodemon .'
   ```
