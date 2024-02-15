@@ -33,7 +33,7 @@ npm install
   npm start
   ```
   > 'node .'  
-  or
+  - or
   ```
   npm run dev
   ```
