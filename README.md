@@ -20,11 +20,11 @@ Back-end:
 ```bash
 cd blogs-api
 npm install
-docker compose up -d
 ``` 
 ## Running the application with Docker
   
   ```
+  docker compose up -d
   docker exec -it blogs_api bash
   ```
 * Then run
