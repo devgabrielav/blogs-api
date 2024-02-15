@@ -1,7 +1,7 @@
 # Project Blogs API
 
 # Context
-This is a CRUD project, simulating a blog with: users, categories and posts.
+This is a CRUD project made with layered architecture, simulating a blog with: users, categories and posts.
 
 Along with the login route with validations, it's possible to: 
   - GET posts, categories and users;
