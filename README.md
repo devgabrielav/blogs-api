@@ -22,8 +22,7 @@ cd blogs-api
 npm install
 docker compose up -d
 ``` 
-## Running the application
-  -- With Docker
+## Running the application with Docker
   
   ```
   docker exec -it blogs_api bash
