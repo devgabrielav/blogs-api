@@ -12,7 +12,7 @@ Along with the login route with validations, it's possible to:
 ## Used technologies
 
 Back-end:
-> Developed using: NodeJS, ExpressJS, MYSQL, Sequelize, JWT
+> Developed using: Javascript, Docker, NodeJS, ExpressJS, MYSQL, Sequelize, JWT
 
 ## Installing Dependencies
 
